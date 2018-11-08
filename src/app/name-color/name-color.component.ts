@@ -28,7 +28,7 @@ export class NameColorComponent {
     var vform = (<HTMLInputElement>document.getElementById("inputName")).value;    
     //this.vResult = (<HTMLInputElement>document.getElementById("inputName")).value;
     
-    
+/*    
     let output  = "";
     //console.log(objForm);
 
@@ -38,7 +38,7 @@ export class NameColorComponent {
     }
     
     console.log(objForm);
-
+*/
 
     if(vform != ""){
       if(vform.length <= 2 && vform.length != 0){
