@@ -33,6 +33,7 @@ export class NameColorComponent {
   
 
   public getName(){
+    
     this.vResult = "";
     document.getElementById("idName").style.color = "";
     let colorName;  
@@ -43,7 +44,7 @@ export class NameColorComponent {
     for(let i = 0;i < vform.length;i++){
 
       const output = Object.values(objForm[i]);
-      output["color"] = (objForm[i].charCodeAt(0) *60 +","+ vform.length*20 +","+ vform.length*10 +"");
+      output["color"] = (objForm[i].charCodeAt(0) +","+ Math.random()*255 +","+ Math.random()*255 +"");
       
       this.vResult += output;
       
