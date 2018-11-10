@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'],
   template: `
     
-    <input type="text" id="inputName" class="form-control" autofocus />
+    <input type="text" (keyup.enter)="onKeyUp()" id="inputName" class="form-control" autofocus />
     <br />
     <button (click)="getName()" type="submit" class="btn btn-primary">submit</button>
     <ul class="display-4 mt-4 list-unstyled">
@@ -29,9 +29,10 @@ export class AppComponent {
   vError            =   "";
   vErrorTemplate    =   "";
   
-  
-
-  public getName(){
+  onKeyUp(){
+    this.getName();
+  }
+  getName(){
     
     this.vResult = "";
     document.getElementById("idName").style.color = "";
@@ -68,7 +69,7 @@ export class AppComponent {
     };
 
   }
-
-
 }
+
+
 
