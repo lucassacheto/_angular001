@@ -1,18 +1,18 @@
 
 import { Component } from '@angular/core';
+import { getClosureSafeProperty } from '@angular/core/src/util/property';
 
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
   template: `
     
-    <input type="text" (keyup.enter)="onKeyUp()" id="inputName" class="form-control" autofocus />
+    
+    <input type="text" [(ngModel)]="vName" (keyup.enter)="onKeyUp()" class="form-control" />
     <br />
     <button (click)="getName()" type="submit" class="btn btn-primary">submit</button>
-    <ul class="display-4 mt-4 list-unstyled">
-      <li id="idName" style="color:#000;">{{ vResult }}</li>
+    <ul class="list-unstyled mt-2">
+      <li *ngFor="let names of objForm" class="list-inline-item" [style.color]="output"><p class="h1">{{names | uppercase}}</p></li>
     </ul>
     <div class="alert {{vErrorTemplate}}" role="alert">
       {{vError}}
@@ -21,55 +21,53 @@ import { Component } from '@angular/core';
   `
 })
 
-
 export class AppComponent {
 
-  vResult           =   "";
-  vColor            =   "";
-  vError            =   "";
-  vErrorTemplate    =   "";
+  vName:any;
+  objForm;
+  output;
+  vColor:any;
+  vError;
+  vErrorTemplate;
+  cu;
   
-  onKeyUp(){
-    this.getName();
-  }
+  onKeyUp(){this.getName();};
+  
   getName(){
     
-    this.vResult = "";
-    document.getElementById("idName").style.color = "";
-    let colorName;  
-    let vform   = (<HTMLInputElement>document.getElementById("inputName")).value;    
-    //this.vResult = (<HTMLInputElement>document.getElementById("inputName")).value;
-    const objForm = Array.from(vform);
-    
-    for(let i = 0;i < vform.length;i++){
-
-      const output = Object.values(objForm[i]);
-      output["color"] = (objForm[i].charCodeAt(0) +","+ Math.random()*255 +","+ Math.random()*255 +"");
+    if(this.vName != undefined){
       
-      this.vResult += output;
+      this.objForm = new Object (this.vName);
       
-      document.getElementById("idName").style.color = " rgb(" + output["color"] + ") ";
+      //console.log(this.objForm);
+      //console.log(this.vColor);
       
-    }
-    
-
-    if(vform != ""){
-      if(vform.length <= 2 && vform.length != 0){
+      for(let i = 0;i < this.objForm.length;i++){
+        
+        this.vColor = new Object(this.objForm[i]);
+        this.vColor["code"] = (this.objForm[i].charCodeAt(0) +","+ Math.round(Math.random()*100) +","+ Math.round(Math.random()*100) +"");
+        this.vColor["colorRGB"] = 'rgb('+ this.vColor["code"] + ')';
+        
+        this.output = this.vColor["colorRGB"]; 
+        
+        //console.log(this.output); 
+        
+      }
+      
+      if(this.vName.length <= 2 && this.vName.length != 0){
         this.vErrorTemplate = "alert-danger";
         this.vError = "Choose a name with at least 3 characters ";
-        this.vResult = "";
       }else{
         this.vErrorTemplate = "alert-success";
         this.vError = "Enjoy you colourful name :)";
-        return vform;
+        return this.vName;
       }
     }else{
       this.vErrorTemplate = "alert-danger";
       this.vError = "The form is empty";
     };
-
+   
   }
+
 }
-
-
 
