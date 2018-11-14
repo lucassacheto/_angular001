@@ -29,39 +29,32 @@ export class AppComponent {
   vColor:any;
   vError;
   vErrorTemplate;
-  cu;
   
   onKeyUp(){this.getName();};
   
   getName(){
-    
-    if(this.vName != undefined){
+    console.log(this.vName);
+    this.objForm = new Object ("");
+    if(typeof this.vName != "undefined" && this.vName != "" && this.vName != null){
       
-      this.objForm = new Object (this.vName);
-      
-      //console.log(this.objForm);
-      //console.log(this.vColor);
-      
-      for(let i = 0;i < this.objForm.length;i++){
-        
-        this.vColor = new Object(this.objForm[i]);
-        this.vColor["code"] = (this.objForm[i].charCodeAt(0) +","+ Math.round(Math.random()*100) +","+ Math.round(Math.random()*100) +"");
-        this.vColor["colorRGB"] = 'rgb('+ this.vColor["code"] + ')';
-        
-        this.output = this.vColor["colorRGB"]; 
-        
-        //console.log(this.output); 
-        
-      }
-      
-      if(this.vName.length <= 2 && this.vName.length != 0){
+      if(this.vName.length <= 2 || this.vName.length == 0){
         this.vErrorTemplate = "alert-danger";
         this.vError = "Choose a name with at least 3 characters ";
       }else{
         this.vErrorTemplate = "alert-success";
         this.vError = "Enjoy you colourful name :)";
-        return this.vName;
+
+        this.objForm = new Object (this.vName);
+
+        for(let i = 0;i < this.objForm.length;i++){
+          
+          this.vColor = new Object(this.objForm[i]);
+          this.vColor["code"] = (this.objForm[i].charCodeAt(0) +","+ Math.round(Math.random()*100) +","+ Math.round(Math.random()*100) +"");
+          this.vColor["colorRGB"] = 'rgb('+ this.vColor["code"] + ')';
+          this.output = this.vColor["colorRGB"];
+        }
       }
+     
     }else{
       this.vErrorTemplate = "alert-danger";
       this.vError = "The form is empty";
